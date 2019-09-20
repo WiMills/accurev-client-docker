@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  accurev:
+    image: wimill/accurev
+  accurev-client:
+    image: accurev-client
+    container_name: accurev-client
