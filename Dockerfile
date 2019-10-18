@@ -1,9 +1,10 @@
-FROM perl
+FROM jenkins/jenkins:lts
 
-COPY accurev-7.3-linux-x64-clientonly.bin installer.properties /tmp/
+COPY installer.properties setup.sh /tmp/
 
-RUN chmod +x /tmp/accurev-7.3-linux-x64-clientonly.bin
-#RUN chmod +x /tmp/setup.sh
-#RUN /tmp/accurev-7.3-linux-x64-clientonly.bin -i silent -f installer.properties
-# For debug purposes
-CMD ["tail", "-f", "/dev/null"]
+USER root
+RUN curl -fsSL http://cdn.microfocus.com/cached/legacymf/Products/accurev/accurev7.3/accurev-7.3-linux-x86-x64-clientonly.bin -o ./accurev-client.bin && \
+  chmod +x ./accurev-client.bin
+RUN ./accurev-client.bin -i silent -f ./tmp/installer.properties
+
+USER jenkins
